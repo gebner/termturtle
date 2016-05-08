@@ -68,7 +68,7 @@ object pi2fact extends scala.App {
 
   println(Z3 isValid Substitution(x -> Numeral(n))(encoding.decodeToInstanceSequent(l)))
 
-  val allConsts = allConstants(l)
+  val allConsts = allConstsOrVars(l)
   val colors = for ((c,i) <- allConsts.toSeq.zipWithIndex)
     yield c -> Color.hsl((35*i).degrees, .5.normalized, .5.normalized)
 

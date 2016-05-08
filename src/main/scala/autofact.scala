@@ -45,7 +45,7 @@ object autofact extends scala.App {
   val l = lang
   l foreach println
 
-  val allConsts = allConstants(l)
+  val allConsts = allConstsOrVars(l)
   val colors = for ((c,i) <- allConsts.toSeq.zipWithIndex)
     yield c -> Color.hsl((35*i).degrees, .5.normalized, .5.normalized)
 

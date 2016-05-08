@@ -28,9 +28,9 @@ object utils {
     implicit def canvas = exporter.canvasPanel.canvas
 
     val i = doodle.backend.Image.compile(img, DrawingContext.blackLines)
-    val bb = i.boundingBox
-    interpreter.draw(img, canvas, bb.width.ceil.toInt+40, bb.height.ceil.toInt+40,
-      Point.cartesian(bb.left-20,bb.top+20)
+    val bb = i.boundingBox.pad(20)
+    interpreter.draw(img, canvas, bb.width.ceil.toInt, bb.height.ceil.toInt,
+      Point.cartesian(bb.left, bb.top)
     )
 
     exporter.result()
@@ -48,13 +48,16 @@ object utils {
   }
 
   def grid(images: Seq[Image]): Image = {
-    val columns = math.sqrt(images.size).toInt
+    val columns = math.sqrt(images.size).ceil.toInt
     allAbove(images.grouped(columns).map(allBeside).toSeq)
   }
 
-  def allConstants(expr: Iterable[LambdaExpression]): Set[Const] =
-    expr.view.flatMap(allConstants(_)).toSet
-  def allConstants(expr: LambdaExpression): Set[Const] =
-    subTerms(expr) collect { case c: Const => c }
+  def allConstsOrVars(expr: Iterable[LambdaExpression]): Set[LambdaExpression] =
+    expr.view.flatMap(allConstsOrVars(_)).toSet
+  def allConstsOrVars(expr: LambdaExpression): Set[LambdaExpression] =
+    subTerms(expr) collect {
+      case v: Var => v
+      case c: Const => c
+    }
 
 }

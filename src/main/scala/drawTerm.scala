@@ -4,8 +4,8 @@ import doodle.syntax._
 
 object drawTerm {
 
-  def apply(term: LambdaExpression, angle: Angle, length: Double, color: Map[Const, Color]): Image = term match {
-    case c: Const =>
+  def apply(term: LambdaExpression, angle: Angle, length: Double, color: Map[LambdaExpression, Color]): Image = term match {
+    case Apps(c, Seq()) =>
       OpenPath(Seq(
         MoveTo(Point.zero),
         LineTo(Point.polar(length, angle))
@@ -17,6 +17,6 @@ object drawTerm {
       apply(head, angle, length, color) on (subTrees.reduce(_ on _) at Vec.polar(angle, length))
   }
 
-  def apply(term: LambdaExpression, colors: Map[Const, Color]): Image = apply(term, -90.degrees, 50, colors)
+  def apply(term: LambdaExpression, colors: Map[LambdaExpression, Color]): Image = apply(term, -90.degrees, 50, colors)
 
 }
