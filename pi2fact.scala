@@ -1,11 +1,11 @@
-import java.nio.file.{Paths, Files}
+import java.nio.file.{Files, Paths}
 
 import at.logic.gapt.expr._
 import at.logic.gapt.expr.fol.Numeral
 import at.logic.gapt.expr.hol.existsclosure
 import at.logic.gapt.grammars.RecursionScheme
 import at.logic.gapt.proofs.Sequent
-import at.logic.gapt.proofs.expansionTrees.InstanceTermEncoding
+import at.logic.gapt.proofs.expansion.InstanceTermEncoding
 import at.logic.gapt.provers.smtlib.Z3
 import doodle.core._
 import doodle.jvm._

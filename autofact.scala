@@ -3,7 +3,7 @@ import at.logic.gapt.expr.hol.existsclosure
 import at.logic.gapt.expr._
 import at.logic.gapt.grammars.RecursionScheme
 import at.logic.gapt.proofs.Sequent
-import at.logic.gapt.proofs.expansionTrees.InstanceTermEncoding
+import at.logic.gapt.proofs.expansion.InstanceTermEncoding
 import at.logic.gapt.provers.eprover.EProver
 import at.logic.gapt.provers.prover9.Prover9
 import at.logic.gapt.provers.vampire.Vampire
@@ -41,8 +41,8 @@ object autofact extends scala.App {
     :+ (f(Numeral(n)) === g(s(O), Numeral(n)))
   )
 
-  val Some(expansionProof) = EProver getExpansionSequent endSequent
-  val (lang, encoding) = InstanceTermEncoding(expansionProof)
+  val Some(expansionProof) = EProver getExpansionProof endSequent
+  val (lang, encoding) = InstanceTermEncoding(expansionProof.expansionSequent)
 
 //  val l = lang map encoding.decodeToSignedFormula
   val l = lang
