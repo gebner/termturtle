@@ -1,6 +1,5 @@
-import at.logic.gapt.expr.{Apps, Const, Var, LambdaExpression}
+import at.logic.gapt.expr.{Apps, Const, LambdaExpression}
 import doodle.core._
-import doodle.syntax._
 
 object drawTerm {
 

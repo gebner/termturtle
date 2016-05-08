@@ -8,7 +8,6 @@ import at.logic.gapt.proofs.Sequent
 import at.logic.gapt.proofs.expansion.InstanceTermEncoding
 import at.logic.gapt.provers.smtlib.Z3
 import doodle.core._
-import doodle.jvm._
 import doodle.syntax._
 import org.jfree.graphics2d.svg.SVGGraphics2D
 

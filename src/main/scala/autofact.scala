@@ -1,14 +1,10 @@
+import at.logic.gapt.expr._
 import at.logic.gapt.expr.fol.Numeral
 import at.logic.gapt.expr.hol.existsclosure
-import at.logic.gapt.expr._
-import at.logic.gapt.grammars.RecursionScheme
 import at.logic.gapt.proofs.Sequent
 import at.logic.gapt.proofs.expansion.InstanceTermEncoding
 import at.logic.gapt.provers.eprover.EProver
-import at.logic.gapt.provers.prover9.Prover9
-import at.logic.gapt.provers.vampire.Vampire
 import doodle.core._
-import doodle.jvm._
 import doodle.syntax._
 
 object autofact extends scala.App {
