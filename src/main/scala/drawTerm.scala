@@ -1,13 +1,14 @@
 import at.logic.gapt.expr.{Apps, Const, LambdaExpression}
 import doodle.core._
+import doodle.syntax._
 
 object drawTerm {
 
   def apply(term: LambdaExpression, angle: Angle, length: Double, color: Map[Const, Color]): Image = term match {
     case c: Const =>
-      Path(Seq(
-        MoveTo(Vec.zero),
-        LineTo(Vec.polar(angle, length))
+      OpenPath(Seq(
+        MoveTo(Point.zero),
+        LineTo(Point.polar(length, angle))
       )) lineColor color(c)
 
     case Apps(head, args) =>

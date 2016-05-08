@@ -6,6 +6,7 @@ import at.logic.gapt.proofs.expansion.InstanceTermEncoding
 import at.logic.gapt.provers.eprover.EProver
 import doodle.core._
 import doodle.syntax._
+import utils._
 
 object autofact extends scala.App {
   val O = FOLConst( "0" )
@@ -44,12 +45,7 @@ object autofact extends scala.App {
   val l = lang
   l foreach println
 
-  def grid(images: Seq[Image]): Image = {
-    val columns = math.sqrt(images.size).toInt
-    allAbove(images.grouped(columns).map(allBeside).toSeq)
-  }
-
-  val allConsts = l flatMap {subTerms(_)} collect { case c: Const => c }
+  val allConsts = allConstants(l)
   val colors = for ((c,i) <- allConsts.toSeq.zipWithIndex)
     yield c -> Color.hsl((35*i).degrees, .5.normalized, .5.normalized)
 
@@ -57,11 +53,6 @@ object autofact extends scala.App {
     sortBy { expressionSize(_) }
     map { drawTerm(_, -90.degrees, 20, colors.toMap) }) lineWidth 0.5
 
-//  val bbox = BoundingBox(img)
-//  val svgGraphics = new SVGGraphics2D(bbox.width.toInt,bbox.height.toInt)
-//  DoodlePanel(img).paintImage(img, Vec(bbox.right,bbox.bottom), DrawingContext.blackLines)(svgGraphics)
-//  Files.write(Paths.get("pi2fact.svg"), svgGraphics.getSVGDocument.getBytes)
-
-  draw(img)
+  img.draw
 
 }

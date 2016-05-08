@@ -1,5 +1,3 @@
-import java.nio.file.{Files, Paths}
-
 import at.logic.gapt.expr._
 import at.logic.gapt.expr.fol.Numeral
 import at.logic.gapt.expr.hol.existsclosure
@@ -9,7 +7,7 @@ import at.logic.gapt.proofs.expansion.InstanceTermEncoding
 import at.logic.gapt.provers.smtlib.Z3
 import doodle.core._
 import doodle.syntax._
-import org.jfree.graphics2d.svg.SVGGraphics2D
+import utils._
 
 object pi2fact extends scala.App {
   val A = Const( "A", Ti -> To )
@@ -65,28 +63,20 @@ object pi2fact extends scala.App {
 
   def lang(i: Int) = hors.parametricLanguage(Numeral(i)).map(_.asInstanceOf[HOLFormula]) map encoding.encode
 
-  def grid(images: Seq[Image]): Image = {
-    val columns = math.sqrt(images.size).toInt
-    allAbove(images.grouped(columns).map(allBeside).toSeq)
-  }
+  val n = 6
+  val l = lang(n)
 
-  val n = 4
-  val l = lang(4)
+  println(Z3 isValid Substitution(x -> Numeral(n))(encoding.decodeToInstanceSequent(l)))
 
-  println(Z3 isValid Substitution(x -> Numeral(4))(encoding.decodeToInstanceSequent(l)))
-
-  val allConsts = l flatMap {subTerms(_)} collect { case c: Const => c }
+  val allConsts = allConstants(l)
   val colors = for ((c,i) <- allConsts.toSeq.zipWithIndex)
     yield c -> Color.hsl((35*i).degrees, .5.normalized, .5.normalized)
 
   val img = grid(l.toSeq
     sortBy { expressionSize(_) }
-    map { drawTerm(_, -90.degrees, 40, colors.toMap) }) lineWidth 0.5
+    map { drawTerm(_, 90.degrees, 70, colors.toMap) }) lineWidth 0.5
 
-  val bbox = BoundingBox(img)
-  val svgGraphics = new SVGGraphics2D(bbox.width.toInt,bbox.height.toInt)
-  DoodlePanel(img).paintImage(img, Vec(bbox.right,bbox.bottom), DrawingContext.blackLines)(svgGraphics)
-  Files.write(Paths.get("pi2fact.svg"), svgGraphics.getSVGDocument.getBytes)
+  exportSVG(img, "pi2fact.svg")
 
-  draw(img)
+  img.draw
 }

@@ -5,8 +5,8 @@ lazy val root = (project in file(".")).
     resolvers += Resolver.jcenterRepo,
     libraryDependencies += "at.logic.gapt" %% "gapt" % "2.1",
 
-    resolvers += "Underscore Training" at "https://dl.bintray.com/underscoreio/training",
-    libraryDependencies += "underscoreio" %% "doodle" % "0.1.0",
+    resolvers += Resolver.bintrayRepo("underscoreio", "training"),
+    libraryDependencies += "underscoreio" %% "doodle" % "0.5.1",
 
     libraryDependencies += "org.jfree" % "jfreesvg" % "3.0"
   )
